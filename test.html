@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODOアプリケーション</title>
+    <style>
+        /* チェックボックスにチェックが入ったときにテキストに打ち消し線を追加 */
+        .completed {
+            text-decoration: line-through;
+        }
+        /* 未完了のスタイル */
+        .not-completed {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>ToDoリスト</h1>
+    </header>
+    
+    <!-- タスクを追加するためのテキスト入力フィールドとボタン -->
+    <input type="text" id="taskInput" placeholder="新しいタスクを追加">
+    <button id="addTaskButton">追加</button>
+    
+    <!-- タスクリストを表示するための要素 -->
+    <ul id="taskList"></ul>
+    
+    <script>
+        // テキスト入力フィールドとボタンを取得
+        let taskInput = document.getElementById("taskInput");
+        let addTaskButton = document.getElementById("addTaskButton");
+
+        // タスクリストを取得
+        let taskList = document.getElementById("taskList");
+
+        // イベントリスナーをボタンに追加
+        addTaskButton.addEventListener("click", function() {
+            let newTask = taskInput.value;
+            
+            // 新しいタスクアイテムを作成
+            let newTaskItem = document.createElement("li");
+            
+            // ボタンを作成
+            let toggleButton = document.createElement("button");
+            toggleButton.textContent = "未完了";
+            
+            // タスク名を表示するテキスト
+            let taskText = document.createElement("span");
+            taskText.textContent = newTask;
+            
+            // タスクアイテムに要素を追加
+            newTaskItem.appendChild(toggleButton);
+            newTaskItem.appendChild(taskText);
+            
+            // ボタンのクリック時の処理
+            toggleButton.addEventListener("click", function() {
+                if (toggleButton.textContent === "未完了") {
+                    toggleButton.textContent = "完了";
+                    taskText.classList.add("completed"); // ボタンが「完了」の場合、打ち消し線を追加
+                    taskText.classList.remove("not-completed"); // 未完了クラスを削除
+                } else {
+                    toggleButton.textContent = "未完了";
+                    taskText.classList.remove("completed"); // ボタンが「未完了」の場合、打ち消し線を削除
+                    taskText.classList.add("not-completed"); // 未完了クラスを追加
+                }
+            });
+            
+            // タスクリストに新しいタスクを追加
+            taskList.appendChild(newTaskItem);
+            
+            // テキスト入力フィールドをクリア
+            taskInput.value = "";
+        });
+    </script>
+</body>
+</html>
