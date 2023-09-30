@@ -14,14 +14,13 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
  
-    <link rel="stylesheet" href="style2.css">
+   <link rel="stylesheet" href="D:\プログラムの保存場所\課題\TODOリストで使えそうなプログラム\今日の日付を表示する。\style2.css"> 
 
 </head>
 <body>
     <header>
     <h1>Time</h1>
     </header>
-    
 <p id="realtime"></p>
 
     <script>
@@ -44,6 +43,20 @@
 // 時計として表示する文字列を作成する
 // 文字列を時間に書きかえる
 // 1秒ごとに特定の処理を実行する
+
+// 解説
+// <header> タグ内の <h1> タグは、ページのタイトルを表示するためのものです。ここでは "Time" というタイトルを表示します。
+
+// <p> タグ内の id="realtime" は、JavaScriptで現在の時刻を表示するための場所を指定するためのものです。JavaScriptからこの要素にアクセスし、時刻を表示します。
+
+// showClock 関数は、現在の時刻を取得し、表示メッセージを生成するための関数です。以下の手順で行います：
+
+// new Date() を使用して現在の日付と時刻を取得します。
+// getHours()、getMinutes()、getSeconds() メソッドを使用して、それぞれ時、分、秒を取得します。
+// 取得した時刻情報を元に、"現在時刻: 時:分:秒" の形式のメッセージを作成します。
+// setInterval('showClock()', 1000) は、showClock 関数を1秒ごとに呼び出すためのものです。setInterval 関数は、指定した関数を一定の間隔で繰り返し実行するために使用されます。ここでは1秒ごとに showClock 関数を呼び出して、現在の時刻を更新し、表示します。
+
+// このコードを実行すると、ページ上に "現在時刻: 時:分:秒" の形式で現在の時刻が表示され、1秒ごとに更新されます。リアルタイムで時刻を表示する簡単なウェブページの例です。
 
 
 //供養コード

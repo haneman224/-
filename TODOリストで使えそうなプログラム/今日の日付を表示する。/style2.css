@@ -6,7 +6,10 @@ body {  font-family: Arial;
 }
 
 header {
-    margin-bottom: 100px;
+    /* margin-bottom: 100px;
+    padding: 0%; */
+    margin: 0;
+    padding: 0;
 }
 
 h1 {
@@ -28,3 +31,15 @@ div{
     background-color: #000;
     color: #f8f5f5;
 }
+
+/* 親要素にも border: none; を指定 */
+.parent-element {
+    border: none;
+}
+
+/* iframe スタイル */
+iframe {
+    max-width: 100%;
+    border: none;
+}
+  
