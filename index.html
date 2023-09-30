@@ -8,17 +8,25 @@
 </head>
     <body>
     <header>
-        <h1>ToDOリスト<h1>
+        <h1>ToDOリスト</h1>
     </header>
 
     <p>タスク完了しましたか？</p>
     <button id="toggleButton"><div id="taskStatus">未完了</div></button>
     
     <!-- タスクを追加するためのテキスト入力フィールドとボタン -->
+    <!-- <input type="text" id="taskInput" placeholder="新しいタスクを追加">
+    <button id="addTaskButton">追加</button> -->
+
     <input type="text" id="taskInput" placeholder="新しいタスクを追加">
-    <button id="addTaskButton">追加</button>
+    <button id="addButton">追加</button>
     
-    <ul id="taskList"></ul> <!-- タスクリストを表示するための要素 -->
+    
+
+    <!-- HTML内で toggleButton のidが
+     "toggleButton"のボタン要素に反応してない？。HTMLのボタン要素にidを追加。 -->
+
+    <ul id="taskList"></ul>  <!-- タスクリストを表示するための要素 -->
 
     <script src="mein.js"></script>
     <script src="sab.js"></script>

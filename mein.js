@@ -11,7 +11,7 @@
 //動き出した関数がテキストボックスの追加を行うコードの記述。
 
 let taskStatusElement =document.getElementById("taskStatus")
-let toggleutton = document.getElementById('taskStatus')
+let toggleButton = document.getElementById('taskStatus');
 
 toggleButton.addEventListener("click",function(){
     let currentStatus = taskStatusElement.textContent;

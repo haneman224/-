@@ -1,8 +1,11 @@
 
-//text入力フィールドとボタンをHTMLからもらう。
+// //text入力フィールドとボタンをHTMLからもらう。
 let taskInput = document.getElementById("taskInput");
 let addButton = document.getElementById("addButton"); 
 
+ // タスクリストを取得
+ let taskList = document.getElementById("taskList");
+ 
 //イベントリスナーをボタンに追加。
 addButton.addEventListener("click",function() {
 let newTask =taskInput.value;
