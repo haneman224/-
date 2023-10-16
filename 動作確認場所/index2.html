@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="botan">ボタン</button>
+    <ul id="task"></ul>
+    <script>
+        const botan =document.getElementById("botan");
+        const task = document.getElementById("task");
+
+        botan.addEventListener("click", function() {
+            // ボタンがクリックしたときに新しいリストアイテムを作成
+            const rist = document.createElement("li");
+            
+            // 新しいリストアイテムを既存のリストに追加
+            task.appendChild(rist);
+        });
+    </script>
+</body>
+</html>
