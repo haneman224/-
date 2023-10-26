@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+    <h1 id="haha">完ぺきな！解決方法！オブジェクトにオブジェクトをぶちこむだけ！
+        なんでそうなったか？
+目的
+        何を消したい？
+        ボタンを押されることによって、消されるべき要素がある。
+書き方
+消されるべき要素が、ボタンを押すと消される。混乱してきたので落ち着いたら追記する、
+これも消せるようにします。
+
+
+
+    </h1>
+<!-- 忘れがちなこと　id指定しないと場所がわからない -->
+    
+<p id="kesu">
+     消される予定の要素   
+    </p>
+    <button id="kesu2">
+        消すボタン
+    </button>
+
+    <button id="kesu4">
+煩悩消すボタン
+    </button>
+    <script>
+        // //要素を消す
+        // const elemnt = document.getElementById('kesu');
+        // elemnt.remove(); 
+
+        
+
+        //要素を消すボタン
+        const elemen2 =document.getElementById('kesu2')
+        kesu2.addEventListener("click",function(){
+        const elemnt = document.getElementById('kesu');
+        elemnt.remove();
+        })
+
+        const elment3 =document.getElementById("haha")
+        haha.addEventListener("click",function(){
+        const elment4 = document.getElementById('kesu4');
+        elment4.remove();
+        })
+
+        //上のは消せるのに下のコードになるの消せないのか分析をする。
+        //以下はすべて解決済み
+        //静的はOK次は動的（JS）の問題。
+        //すべきことは、消されるものの宣言と取得、消すボタンの正しい取得と宣言
+        //どういう動きがあって、どういう風に動くか、何がどう動くべきか。
+
+        //問題と原因とほんわかした対策。
+        //消されなかった、なぜか、指定先を間違えてる。そもそも、ボタン取得と宣言も出来てない。
+        //ボタンを押されることによって、消されるべき要素がある。
+        
+        //状況
+        //今あるのは要素を持ってきて、いるだけ
+
+        //できたら別々のファイルにして、本プログラムにぶち込めるようにすべきだったかも、楽だし。
+
+        //要素を消すコードはかけた
+        //次はボタンの追加をする。　ＨＴＭＬＴ静的ボタン→ＪＳで動的ボタン関数の追加。
+    </script>
+</body>
+</html>
