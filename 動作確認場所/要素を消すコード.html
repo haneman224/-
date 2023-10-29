@@ -8,7 +8,7 @@
 <body>
 
 
-    <h1 id="haha">完ぺきな！解決方法！オブジェクトにオブジェクトをぶちこむだけ！
+    <p id="haha">完ぺきな！解決方法！オブジェクトにオブジェクトをぶちこむだけ！
         なんでそうなったか？
 目的
         何を消したい？
@@ -16,41 +16,38 @@
 書き方
 消されるべき要素が、ボタンを押すと消される。混乱してきたので落ち着いたら追記する、
 これも消せるようにします。
+    </p> <!-- 消去先２ -->
 
-
-
-    </h1>
-<!-- 忘れがちなこと　id指定しないと場所がわからない -->
     
-<p id="kesu">
-     消される予定の要素   
-    </p>
-    <button id="kesu2">
-        消すボタン
-    </button>
+    <p id="kesu">消される予定の要素</p> <!--消去先1 -->
+    <button id="kesu2">消すボタン</button>
 
-    <button id="kesu4">
-煩悩消すボタン
-    </button>
+    <button id="kesu4">煩悩を消すボタン</button>
+
+    <button id="zenbukesu">ボタンを消すボタン。</button>
     <script>
-        // //要素を消す
-        // const elemnt = document.getElementById('kesu');
-        // elemnt.remove(); 
-
-        
-
-        //要素を消すボタン
-        const elemen2 =document.getElementById('kesu2')
+        const elemen2 =document.getElementById('kesu2')//消すボタン
         kesu2.addEventListener("click",function(){
-        const elemnt = document.getElementById('kesu');
-        elemnt.remove();
+        const elemnt5 = document.getElementById('kesu');//消去先1の参照
+        elemnt5.remove();//実際に消すコマンド
         })
 
-        const elment3 =document.getElementById("haha")
-        haha.addEventListener("click",function(){
-        const elment4 = document.getElementById('kesu4');
-        elment4.remove();
+        const elment3 =document.getElementById("kesu4")//消すボタン
+        kesu4.addEventListener("click",function(){
+        const elment4 = document.getElementById('haha');//消去先2の参照
+        haha.remove();//実際に消すコマンド
         })
+
+        const elment5 =document.getElementById("zenbukesu")//ボタンを消す
+        zenbukesu.addEventListener("click",function(){
+        kesu4.remove();
+        kesu2.remove();//これ、なんとかすっきりさせられないだろうか？
+        })
+
+
+        //20231029
+        //解決指定先が間違っていた。参照先が違った。
+
 
         //上のは消せるのに下のコードになるの消せないのか分析をする。
         //以下はすべて解決済み
