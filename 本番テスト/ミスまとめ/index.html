@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>TODOアプリケーション</title>
+</head>
+<body>
+    <button id="button1">＋追加</button>
+    <ul id="task"></ul>
+    <input id="text1" type="text" name="text" placeholder="タスク記入欄" >
+    <script>
+"use strict";
+const HTML_button = document.getElementById("button1");//HTMLからIDの参照
+const HTML_task = document.getElementById("task");
+const HTML_textbox = document.getElementById("text1");
+
+
+
+HTML_button.addEventListener("click",function(){  
+    //ボタンクリック時にリスト要素を生成。
+const risut = document.createElement("li");
+risut.textContent = HTML_textbox.value;
+HTML_textbox.value="";//空を代入するよ
+HTML_task.appendChild(risut);//新しいリストを追加するよ。
+
+const botan= document.createElement("button");//ボタン要素を作るオブジェクト。
+botan.textContent ="未完了"; //ボタン内のtextを未完了と表示させてる。
+ risut.appendChild(botan);  //リストの中にボタンを入れる。
+// HTML_task.appendChild(botan);
+
+botan.addEventListener("click",function(){
+    if(botan.textContent==="未完了"){//未完了と表記されていて、その状態でボタンが押されると完了になる。
+        botan.textContent ="完了";
+    }else{
+        botan.textContent ="未完了" ;//未完了だった場合それ以外になる（完了になる）
+    }
+    }
+)})
+
+
+
+;
+
+
+
+    </script>
+
+</body>
+</html>

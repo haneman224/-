@@ -2,48 +2,65 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>TODOアプリケーション</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
 <body>
-    <button id="button1">＋追加</button>
-    <ul id="task"></ul>
-    <input id="text1" type="text" name="text" placeholder="タスク記入欄" >
+    <div>
+        <button id="botan">ボタン</button>
+        <ul id="task"></ul>
+        <input id="ran">
+    </div>
+
     <script>
-"use strict";
-const HTML_button = document.getElementById("button1");//HTMLからIDの参照
-const HTML_task = document.getElementById("task");
-const HTML_textbox = document.getElementById("text1");
+        const botan = document.getElementById("botan");//要素作成ボタン
+        const task = document.getElementById("task");//タスクを作る
+        const ran2 = document.getElementById("ran");//テキストボックス。
 
 
+        botan.addEventListener("click", function() {
+            // ボタンをクリックしたときに新しいリストliを作る。
+            const rist = document.createElement("li");//要素、liを作るエレメント。
+            rist.textContent = ran2.value;//テキストの宣言？
+            ran2.value = "";//テキストを空にする。
 
-HTML_button.addEventListener("click",function(){  
-    //ボタンクリック時にリスト要素を生成。
-const risut = document.createElement("li");
-risut.textContent = HTML_textbox.value;
-HTML_textbox.value="";//空を代入するよ
-HTML_task.appendChild(risut);//新しいリストを追加するよ。
+            // リストを既存のリストに追加
+            task.appendChild(rist);//削除する場所。消す場所。
 
-const botan= document.createElement("button");//ボタン要素を作るオブジェクト。
-botan.textContent ="未完了"; //ボタン内のtextを未完了と表示させてる。
- risut.appendChild(botan);  //リストの中にボタンを入れる。
-// HTML_task.appendChild(botan);
+            // リストの対応するボタンを生成
+            const taskBotan = document.createElement("button");
+            taskBotan.textContent = "未完了"; // 最初は未完了で出したいからそのまま代入。。
+            rist.appendChild(taskBotan);
 
-botan.addEventListener("click",function(){
-    if(botan.textContent==="未完了"){//未完了と表記されていて、その状態でボタンが押されると完了になる。
-        botan.textContent ="完了";
-    }else{
-        botan.textContent ="未完了" ;//未完了だった場合それ以外になる（完了になる）
-    }
-    }
-)})
+            // 削除ボタンを生成
+
+            const Button = document.createElement("button");//削除ボタン
+            Button.textContent = "削除"; //テキストボックスを作ってあげて、文字を代入したらボダンができる？
+            rist.appendChild(Button);//新しく作られる要素の中と同じ場所に。
 
 
+            // ボタンにクリックリスナーを追加　中にif文。　＝＝と悩んだ、けどなぜか、＝＝＝じゃないと出来なかった。なぜ？
+            taskBotan.addEventListener("click", function() {
+                if (taskBotan.textContent === "未完了") {
+             taskBotan.textContent = "完了";
+                } else {
+                 taskBotan.textContent = "未完了";
+                }
+            });
 
-;
+                         // 削除ボタンにクリックリスナーを追加
+                         Button.addEventListener("click", function() {
+                // リストアイテムを要素を削除するコード
+                task.removeChild(rist);
+
+               //問題　定数の宣言場所の問題で削除ボタンが新要素にしか、つかなかった。
+               //解決　宣言場所の変更（クイックリスナー外から中へ）
+               //
+        });
+    });
 
 
 
     </script>
-
 </body>
 </html>
