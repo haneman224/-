@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Task Manager</title>
+</head>
+<body>
+    <div>
+        <label for="taskInput">新しいタスク:</label>
+        <input type="text" id="taskInput">
+        
+        <label for="taskDuration">期間:</label>
+        <select id="taskDuration">
+            <option value="30">30分</option>
+            <option value="60">1時間</option>
+            <option value="720">半日</option>
+            <option value="1440">1日</option>
+        </select>
+
+        <button onclick="addTask()">タスクを追加</button>
+        <ul id="taskList"></ul>
+    </div>
+
+    <script>
+        function addTask() {
+            const taskInput = document.getElementById("taskInput");
+            const taskDuration = document.getElementById("taskDuration");
+            const taskList = document.getElementById("taskList");
+
+            if (taskInput.value.trim() !== "") {
+                const newTaskText = taskInput.value.trim();
+                const durationInMinutes = parseInt(taskDuration.value, 10);
+
+                const newTaskElement = document.createElement("li");
+                newTaskElement.textContent = `${newTaskText} (期間: ${formatDuration(durationInMinutes)})`;
+                taskList.appendChild(newTaskElement);
+
+                const statusButton = document.createElement("button");
+                statusButton.textContent = "未完了";
+                newTaskElement.appendChild(statusButton);
+
+                const deleteButton = document.createElement("button");
+                deleteButton.textContent = "削除";
+                newTaskElement.appendChild(deleteButton);
+
+                statusButton.addEventListener("click", function() {
+                    toggleStatus(statusButton);
+                });
+
+                deleteButton.addEventListener("click", function() {
+                    taskList.removeChild(newTaskElement);
+                });
+
+                taskInput.value = "";
+            }
+        }
+
+        function toggleStatus(button) {
+            button.textContent = (button.textContent === "未完了") ? "完了" : "未完了";
+        }
+
+        function formatDuration(minutes) {
+            const hours = Math.floor(minutes / 60);
+            const remainingMinutes = minutes % 60;
+            return `${hours}時間${remainingMinutes}分`;
+        }
+    </script>
+</body>
+</html>
