@@ -1,9 +1,0 @@
-@import url(sanitize\ \(1\).css);
-
-
-body p {  display:flex;
-    justify-content:center;
-    align-items:center;
-    width: 19px;
-    height:1px;
-}

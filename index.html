@@ -3,64 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Task List</title>
 </head>
 <body>
     <div>
-        <button id="botan">ボタン</button>
-        <ul id="task"></ul>
-        <input id="ran">
+        <!-- タスクを追加するボダン -->
+        <button id="addTaskBtn">タスクを追加</button>
+        <!-- タスクを表記するためのリスト -->
+        <ul id="taskList"></ul>
+        <!-- 入力フィールド -->
+        <input id="taskInput" placeholder="タスクを入力">
+        <!-- 期限つけるやつ -->
+        <select id="taskDeadline">
+            <option value="30">30分</option>
+            <option value="60">1時間</option>
+            <option value="720">半日</option>
+            <option value="1440">1日</option>
+        </select>
     </div>
 
     <script>
-        const botan = document.getElementById("botan");//要素作成ボタン
-        const task = document.getElementById("task");//タスクを作る
-        const ran2 = document.getElementById("ran");//テキストボックス。
+        class TaskManager { //タスクの追加と削除をするクラス
+            constructor() {//メソッド？コンストラクタ内部　関数　宣言
 
+                this.taskList = document.getElementById("taskList");//HTMLのid;taskListから持ってきてる
+                this.taskInput = document.getElementById("taskInput");//HTMLのtaskInputから
+                this.taskDeadline = document.getElementById("taskDeadline");//HTMLのtaskDeadlineから
+                this.addTaskBtn = document.getElementById("addTaskBtn");//HTMLのaddTaskBtnから
+//イベントリスナーの設置。//
+                this.addTaskBtn.addEventListener("click", this.addTask.bind(this));//Taskmanegerの呼び出し。
+            }
 
-        botan.addEventListener("click", function() {
-            // ボタンをクリックしたときに新しいリストliを作る。
-            const rist = document.createElement("li");//要素、liを作るエレメント。
-            rist.textContent = ran2.value;//テキストの宣言？
-            ran2.value = "";//テキストを空にする。
-
-            // リストを既存のリストに追加
-            task.appendChild(rist);//削除する場所。消す場所。
-
-            // リストの対応するボタンを生成
-            const taskBotan = document.createElement("button");
-            taskBotan.textContent = "未完了"; // 最初は未完了で出したいからそのまま代入。。
-            rist.appendChild(taskBotan);
-
-            // 削除ボタンを生成
-
-            const Button = document.createElement("button");//削除ボタン
-            Button.textContent = "削除"; //テキストボックスを作ってあげて、文字を代入したらボダンができる？
-            rist.appendChild(Button);//新しく作られる要素の中と同じ場所に。
-
-
-            // ボタンにクリックリスナーを追加　中にif文。　＝＝と悩んだ、けどなぜか、＝＝＝じゃないと出来なかった。なぜ？
-            taskBotan.addEventListener("click", function() {
-                if (taskBotan.textContent === "未完了") {
-             taskBotan.textContent = "完了";
-                } else {
-                 taskBotan.textContent = "未完了";
+            addTask() {//メゾット　テキストと期限の値を取得？する。
+                const taskText = this.taskInput.value.trim();//入力の値を持ってくる。
+                const deadlineValue = parseInt(this.taskDeadline.value, 10);//１０新数
+//タスクのテキストが空白かのチェックをする。　空じゃなかったら、そのまま作る
+                if (taskText !== "") {
+                    //TaskTemをリストに。
+                    const newTask = new TaskItem(taskText, deadlineValue);
+                    this.taskList.appendChild(newTask.render());
+                    this.taskInput.value = "";
                 }
-            });
+            }
+        }
 
-                         // 削除ボタンにクリックリスナーを追加　ｓ
-                         Button.addEventListener("click", function() {
-                // リストアイテムを要素を削除するコード
-                task.removeChild(rist);
+         class TaskItem {   //タスクを担当してもらうクラス
+            constructor(text, deadline) { //メゾット　タスクのテキストと期間を受ける、制作する。　
+                //初期化する。
 
-               //問題　定数の宣言場所の問題で削除ボタンが新要素にしか、つかなかった。
-               //解決　宣言場所の変更（クイックリスナー外から中へ）
-               //
-        });
-    });
+                //変数
+                this.text = text;
+                this.status = "未完了";
+                this.deadline = deadline;
+                this.element = document.createElement("li");
+                this.taskBotan = document.createElement("button");
+                this.deleteButton = document.createElement("button");
+                //ボタンとかのコンテンツとHTMLのタスクを設定する。
+                this.taskBotan.textContent = "未完了";
+                this.deleteButton.textContent = "削除";
 
+                this.element.textContent = `${this.text} (期限: ${this.formatDeadline()})`;
+                this.element.appendChild(this.taskBotan);
+                this.element.appendChild(this.deleteButton);
+                //イベントリスナーの設置、ボタン・タスク要素に。
+                this.taskBotan.addEventListener("click", this.toggleStatus.bind(this));
+                this.deleteButton.addEventListener("click", this.deleteTask.bind(this));
+            }
 
+            toggleStatus() { //メゾット　タスクの切り替えを行う　未完了から完了
+                this.taskBotan.textContent = (this.taskBotan.textContent === "未完了") ? "完了" : "未完了";
+            }
 
+            deleteTask() { //メソッドは、タスクアイテムをリストから削除する？
+                this.element.parentNode.removeChild(this.element);
+            }
+
+            formatDeadline() {　//メゾット　期限を表記する　これOSS
+                const hours = Math.floor(this.deadline / 60);
+                const minutes = this.deadline % 60;
+                return `${hours}時間${minutes}分`;
+            }
+
+            render() {　//メゾット　要素を戻す。
+                return this.element;
+            }
+        }
+
+        // taskManagerのオブジェクトを作る
+        const taskManager = new TaskManager();
     </script>
 </body>
 </html>
