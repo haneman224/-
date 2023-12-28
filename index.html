@@ -14,12 +14,7 @@
         <!-- 入力フィールド -->
         <input id="taskInput" placeholder="タスクを入力">
         <!-- 期限つけるやつ -->
-        <select id="taskDeadline">
-            <option value="30">30分</option>
-            <option value="60">1時間</option>
-            <option value="720">半日</option>
-            <option value="1440">1日</option>
-        </select>
+        <input type="datetime-local" id="taskDeadline"> <!-- 日付と時刻の入力フィールドに変更 -->
     </div>
 
     <script>
@@ -30,16 +25,17 @@
                 this.taskInput = document.getElementById("taskInput");//HTMLのtaskInputから
                 this.taskDeadline = document.getElementById("taskDeadline");//HTMLのtaskDeadlineから
                 this.addTaskBtn = document.getElementById("addTaskBtn");//HTMLのaddTaskBtnから
-//イベントリスナーの設置。//
+                //イベントリスナーの設置。//
                 this.addTaskBtn.addEventListener("click", this.addTask.bind(this));//Taskmanegerの呼び出し。
             }
 
             addTask() {//メゾット　テキストと期限の値を取得？する。
                 const taskText = this.taskInput.value.trim();//入力の値を持ってくる。
-                const deadlineValue = parseInt(this.taskDeadline.value, 10);//１０新数
-//タスクのテキストが空白かのチェックをする。　空じゃなかったら、そのまま作る
+                const deadlineValue = new Date(this.taskDeadline.value);// 日付と時刻の入力値を Date オブジェクトに変換
+
+                // タスクのテキストが空白かのチェックをする。　空じゃなかったら、そのまま作る
                 if (taskText !== "") {
-                    //TaskTemをリストに。
+                    // TaskTemをリストに。
                     const newTask = new TaskItem(taskText, deadlineValue);
                     this.taskList.appendChild(newTask.render());
                     this.taskInput.value = "";
@@ -47,10 +43,9 @@
             }
         }
 
-         class TaskItem {   //タスクを担当してもらうクラス
+        class TaskItem {   //タスクを担当してもらうクラス
             constructor(text, deadline) { //メゾット　タスクのテキストと期間を受ける、制作する。　
                 //初期化する。
-
                 //変数
                 this.text = text;
                 this.status = "未完了";
@@ -78,13 +73,12 @@
                 this.element.parentNode.removeChild(this.element);
             }
 
-            formatDeadline() {　//メゾット　期限を表記する　これOSS
-                const hours = Math.floor(this.deadline / 60);
-                const minutes = this.deadline % 60;
-                return `${hours}時間${minutes}分`;
+            formatDeadline() { //メゾット　期限を表記する　これOSS　ロケールの指定（ja-JP＝場所と日付、時刻を日本に）（hour12: false };は２４時間制で表記させる)
+                const options = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false };
+                return this.deadline.toLocaleDateString('ja-JP', options);
             }
 
-            render() {　//メゾット　要素を戻す。
+            render() { //メゾット　要素を戻す。
                 return this.element;
             }
         }
