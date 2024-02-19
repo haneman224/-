@@ -61,12 +61,15 @@
 
                 this.element = document.createElement("li");
                 this.taskBotan = document.createElement("button");
-                this.editableText = document.createElement("span");
+                this.editableText = document.createElement("span"); // テキスト部分を span 要素で囲む 作ったテキストを囲むため。
+                this.deadlineText = document.createElement("span"); // 期限部分を span 要素で囲む
                 this.deleteButton = document.createElement("button");
 
-                this.editableText.textContent = `${this.text} (期限: ${this.formatDeadline()})`;
+                this.editableText.textContent = this.text;
+                this.deadlineText.textContent = `(期限: ${this.formatDeadline()})`;
 
                 this.element.appendChild(this.editableText);
+                this.element.appendChild(this.deadlineText);
 
                 this.taskBotan.textContent = "未完了";
                 this.deleteButton.textContent = "削除";
@@ -84,16 +87,15 @@
             }
 
             enableEditing() {
-                // 直接編集可能な状態にする
+                // 編集可能な状態にする
                 this.editableText.contentEditable = true;
                 this.editableText.focus();
                 
                 // 編集が終わったときの処理
                 this.editableText.addEventListener("blur", () => {
                     this.editableText.contentEditable = false;
-                    const newText = this.editableText.textContent.trim();
-                    this.text = newText;
-                    this.editableText.textContent = `${this.text} (期限: ${this.formatDeadline()})`;
+                    this.text = this.editableText.textContent.trim();
+                    this.editableText.textContent = this.text;
                 });
             }
 
