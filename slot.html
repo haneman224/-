@@ -1,2 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>息抜きslotゲーム</title>
+</head>
+<body>
+    <div>
+        <!-- ボタンをクリックしてランダムな数字を作る。 -->
+        <button id="button">slotゲーム</button>
+        <!-- 結果を表記する要素 -->
+        <p id="a"></p>
+    </div>
+    
+    <script>
+        const button = document.getElementById("button");
+        const a2 = document.getElementById("a");
 
-
+        // このコードは、HTML内のボタンがクリックされたときに実行されるJavaScriptのイベントリスナーを設定
+        button.addEventListener("click", () => {
+            const a = Math.floor(Math.random() * 100) + 1; // 正しい形式で Math オブジェクトを参照?
+            a2.textContent = "slotゲームの数字は:" + a;
+        });
+    </script>
+</body>
+</html>
