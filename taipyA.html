@@ -27,7 +27,7 @@
 
     <script>
         class TaskManager {
-            constructor() {
+            constructor() {// コンテナーの役割、
                 this.taskList = document.getElementById("taskList");
                 this.taskInput = document.getElementById("taskInput");
                 this.taskDeadline = document.getElementById("taskDeadline");
@@ -83,7 +83,13 @@
             }
 
             toggleStatus() {
-                this.taskBotan.textContent = (this.taskBotan.textContent === "未完了") ? "完了" : "未完了";
+                if (this.taskBotan.textContent === "未完了") {
+                    this.taskBotan.textContent = "完了";
+                    this.editableText.style.textDecoration = "line-through";
+                } else {
+                    this.taskBotan.textContent = "未完了";
+                    this.editableText.style.textDecoration = "none";
+                }
             }
 
             enableEditing() {
