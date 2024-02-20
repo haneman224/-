@@ -27,15 +27,15 @@
 
     <script>
         class TaskManager {
-            constructor() {// コンテナーの役割、
-                this.taskList = document.getElementById("taskList");
-                this.taskInput = document.getElementById("taskInput");
-                this.taskDeadline = document.getElementById("taskDeadline");
-                this.addTaskBtn = document.getElementById("addTaskBtn");
+                constructor() {// コンテナーの役割、
+                    this.taskList = document.getElementById("taskList");
+                    this.taskInput = document.getElementById("taskInput");
+                    this.taskDeadline = document.getElementById("taskDeadline");
+                    this.addTaskBtn = document.getElementById("addTaskBtn");
 
-                this.addTaskBtn.addEventListener("click", this.addTask.bind(this));
-                
-                this.taskCounter = 1;
+                    this.addTaskBtn.addEventListener("click", this.addTask.bind(this));
+                    
+                    this.taskCounter = 1;
             }
 
             addTask() {
@@ -103,6 +103,8 @@
                     this.text = this.editableText.textContent.trim();
                     this.editableText.textContent = this.text;
                 });
+
+                //this.editableText.onblur　　編集の処理の仕方　
             }
 
             deleteTask() {
