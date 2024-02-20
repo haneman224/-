@@ -4,10 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task List</title>
+    <style>
+        .editable {
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <div>
-        <!-- タスクを追加するボダン -->
+        <!-- タスクを追加するボタン -->
         <button id="addTaskBtn">タスクを追加</button>
         <!-- タスクを表記するためのリスト -->
         <ul id="taskList"></ul>
@@ -19,93 +26,101 @@
     </div>
 
     <script>
-        class TaskManager { //タスクの追加と削除をするクラス
-            constructor() {//メソッド？コンストラクタ内部　関数　宣言
+        class TaskManager {
+                constructor() {// コンテナーの役割、
+                    this.taskList = document.getElementById("taskList");
+                    this.taskInput = document.getElementById("taskInput");
+                    this.taskDeadline = document.getElementById("taskDeadline");
+                    this.addTaskBtn = document.getElementById("addTaskBtn");
 
-                this.taskList = document.getElementById("taskList");//HTMLのid;taskListから持ってきてる
-                this.taskInput = document.getElementById("taskInput");//HTMLのtaskInputから
-                this.taskDeadline = document.getElementById("taskDeadline");//HTMLのtaskDeadlineから
-                this.addTaskBtn = document.getElementById("addTaskBtn");//HTMLのaddTaskBtnから
-                //イベントリスナーの設置。//
-                this.addTaskBtn.addEventListener("click", this.addTask.bind(this));//Taskmanegerの呼び出し。
-                
-                this.taskCounter = 1;//タスクIDの管理カウンター
+                    this.addTaskBtn.addEventListener("click", this.addTask.bind(this));
+                    
+                    this.taskCounter = 1;
             }
 
-            addTask() {//メゾット　テキストと期限の値を取得？する。
-                const taskText = this.taskInput.value.trim();//入力の値を持ってくる。
-                const deadlineValue = new Date(this.taskDeadline.value);// 日付と時刻の入力値を Date オブジェクトに変換
+            addTask() {
+                const taskText = this.taskInput.value.trim();
+                const deadlineValue = new Date(this.taskDeadline.value);
 
-                // タスクのテキストが空白かのチェックをする。　空じゃなかったら、そのまま作る
                 if (taskText !== "") {
-                    // TaskTemをリストに。
-                    const newTask = new TaskItem(taskText, deadlineValue,this.taskCounter);
-
-                    this.taskCounter++;//インクリメントをする。
+                    const newTask = new TaskItem(taskText, deadlineValue, this.taskCounter);
+                    this.taskCounter++;
 
                     this.taskList.appendChild(newTask.render());
                     this.taskInput.value = "";
                 }
             }
-
         }
 
-
-        
-
-        class TaskItem {   //タスクを担当してもらうクラス
-            constructor(text, deadline,id) { //メゾット　タスクのテキストと期間を受ける、制作する。　
-                //初期化する。
-                //変数
+        class TaskItem {
+            constructor(text, deadline, id) {
                 this.text = text;
                 this.status = "未完了";
                 this.deadline = deadline;
-                this.id = id; //タスクのID
+                this.id = id;
 
                 this.element = document.createElement("li");
                 this.taskBotan = document.createElement("button");
-                this.editButton = document.createElement("button");
+                this.editableText = document.createElement("span"); // テキスト部分を span 要素で囲む 作ったテキストを囲むため。
+                this.deadlineText = document.createElement("span"); // 期限部分を span 要素で囲む
                 this.deleteButton = document.createElement("button");
-                //ボタンとかのコンテンツとHTMLのタスクを設定する。
+
+                this.editableText.textContent = this.text;
+                this.deadlineText.textContent = `(期限: ${this.formatDeadline()})`;
+
+                this.element.appendChild(this.editableText);
+                this.element.appendChild(this.deadlineText);
+
                 this.taskBotan.textContent = "未完了";
-                this.editButton.textContent ="編集";
                 this.deleteButton.textContent = "削除";
 
-                this.element.textContent = `${this.text} (期限: ${this.formatDeadline()})`;
                 this.element.appendChild(this.taskBotan);
-                
                 this.element.appendChild(this.deleteButton);
-                //イベントリスナーの設置、ボタン・タスク要素に。
-                this.taskBotan.addEventListener("click", this.toggleStatus.bind(this));
-                
-                this.editButton.addEventListener("click",this.editTask.bind(this));
 
+                this.taskBotan.addEventListener("click", this.toggleStatus.bind(this));
+                this.editableText.addEventListener("click", this.enableEditing.bind(this));
                 this.deleteButton.addEventListener("click", this.deleteTask.bind(this));
             }
 
-            toggleStatus() { //メゾット　タスクの切り替えを行う　未完了から完了
-                this.taskBotan.textContent = (this.taskBotan.textContent === "未完了") ? "完了" : "未完了";
+            toggleStatus() {
+                if (this.taskBotan.textContent === "未完了") {
+                    this.taskBotan.textContent = "完了";
+                    this.editableText.style.textDecoration = "line-through";
+                } else {
+                    this.taskBotan.textContent = "未完了";
+                    this.editableText.style.textDecoration = "none";
+                }
             }
 
-            editTask(){//ボタンが押されたときの処理。
-                this.task
+            enableEditing() {
+                // 編集可能な状態にする
+                this.editableText.contentEditable = true;
+                this.editableText.focus();
+                
+                // 編集が終わったときの処理
+                this.editableText.addEventListener("blur", () => {
+                    this.editableText.contentEditable = false;
+                    this.text = this.editableText.textContent.trim();
+                    this.editableText.textContent = this.text;
+                });
+
+                //this.editableText.onblur　　編集の処理の仕方　
             }
 
-            deleteTask() { //メソッドは、タスクアイテムをリストから削除する？
+            deleteTask() {
                 this.element.parentNode.removeChild(this.element);
             }
 
-            formatDeadline() { //メゾット　期限を表記する　これOSS　ロケールの指定（ja-JP＝場所と日付、時刻を日本に）（hour12: false };は２４時間制で表記させる)
+            formatDeadline() {
                 const options = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false };
                 return this.deadline.toLocaleDateString('ja-JP', options);
             }
 
-            render() { //メゾット　要素を戻す。
+            render() {
                 return this.element;
             }
         }
 
-        // taskManagerのオブジェクトを作る
         const taskManager = new TaskManager();
     </script>
 </body>
