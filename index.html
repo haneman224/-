@@ -58,13 +58,24 @@
                 if (taskText !== "") {
                     const newTask = new TaskItem(taskText, deadlineValue, this.taskCounter);
                     this.taskCounter++;
-
                     this.tasks.push(newTask); // 配列にタスクを追加
 
                     this.taskList.appendChild(newTask.render());
                     this.taskInput.value = "";
+
+                    //タスクが追加された後に、タスクの状態をチェック。完了ならカウントする。
+                    if(newTask.status === "完了"){
+                        this.completadTasks++;
+                    }
+
+                    this.updateTaskStatusDisplay();//タスクの状態を表記するためのメゾット呼び出し。
                 }
             }
+            updateTaskStatusDisplay(){
+                const totalTasks =this.tasks.length;
+                const taskStatusELement =document.getElementById("taskStatus");
+                taskStatusELement.textContent =TaskItem `完了タスク数: ${this.completedTasks} / 総タスク数: ${totalTasks}`;
+                        }
         }
 
         class TaskItem {//クラス: 個々のタスクを表すクラス
@@ -100,19 +111,23 @@
                 this.editableText.addEventListener("dblclick", this.enableEditing.bind(this));
             }
 
-            toggleStatus() {//タスクのステータスを切り替えるメソッドです（未完了と完了を切り替え)
+            toggleStatus() {//タスクのステータスを切り替えるメソッド（未完了と完了を切り替え)
                 this.taskBotan.textContent = (this.taskBotan.textContent === "未完了") ? "完了" : "未完了";
+                this.status =(this.taskBotan.textContent === "未完了") ? "未完了" :"完了";
+                
+                //タスクの状態が変更されたらTaskManegerのupdateTaskStatusDisplayメソッドを呼び出して表示を更新される。
+                taskManager.updateTaskStatusDisplay();
             }
 
             editTask() {//タスクを編集するメソッド。ダイアログで新しいテキストを入力すると、それに応じてタスクを更新
-                const newText = prompt("タスクを編集", this.text);
+                const newText = prompt("タスクを編集", this.text);updateTaskStatusDisplayメソッドを呼び出して表示を更新する
                 if (newText !== null) {
                     this.text = newText;
                     this.editableText.textContent = `${this.text} (期限: ${this.formatDeadline()})`;
                 }
             }
 
-            deleteTask() {//タスクを削除するメソッドです。リストからタスクを削除
+            deleteTask() {//タスクを削除するメソッド。リストからタスクを削除
                 this.element.parentNode.removeChild(this.element);
             }
 
